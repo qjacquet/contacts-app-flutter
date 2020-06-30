@@ -5,9 +5,11 @@ import 'package:contactsapp/src/app_module.dart';
 import 'package:contactsapp/src/home/home_bloc.dart';
 import 'package:contactsapp/src/home/home_module.dart';
 import 'package:contactsapp/src/shared/repository/contact_repository.dart';
+import 'package:date_field/date_field.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
 
 class EditPage extends StatefulWidget {
@@ -28,6 +30,7 @@ class _EditPageState extends State<EditPage> {
   final _cComments = TextEditingController();
   final _cAge = TextEditingController();
   final _cGender = TextEditingController();
+  DateTime birthDate;
   String gender = 'homme';
   String photoBase64;
   HomeBloc bloc;
@@ -46,6 +49,8 @@ class _EditPageState extends State<EditPage> {
     _cEmail.text = EditPage.contact['email'];
     _cComments.text = EditPage.contact['comments'];
     photoBase64 = EditPage.contact['photo'];
+    birthDate =  DateTime.tryParse(EditPage.contact['birthDate']);
+
     gender = EditPage.contact['gender'];
     super.initState();
   }
@@ -101,16 +106,23 @@ class _EditPageState extends State<EditPage> {
       ),
     );
 
-    TextFormField inputGender = TextFormField(
-      controller: _cGender,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(50),
-      ],
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        labelText: 'Genre',
-        icon: Icon(Icons.web),
-      ),
+    Column pickBirthDate = Column(
+        children: <Widget>[
+          new DateField(
+            label: 'Sélectionner une date',
+            decoration: InputDecoration(
+              labelText: 'Date de naissance',
+              icon: Icon(Icons.cake),
+            ),
+            onDateSelected: (DateTime value) {
+              setState(() {
+                birthDate = value;
+              });
+            },
+            selectedDate: birthDate,
+            dateFormat: DateFormat('dd/MM/yyyy'),
+          ),
+        ]
     );
 
     TextFormField inputAge = TextFormField(
@@ -230,7 +242,7 @@ class _EditPageState extends State<EditPage> {
               inputFirstName,
               inputLastName,
               dropDownGender,
-              inputAge,
+              pickBirthDate,
               inputJob,
               inputPhoneNumber,
               inputEmail,
@@ -263,6 +275,7 @@ class _EditPageState extends State<EditPage> {
                         'lastName': _cLastName.text,
                         'gender': gender,
                         'age': _cAge.text,
+                        'birthDate': birthDate != null ? birthDate.toString() : '',
                         'job': _cJob.text,
                         'phoneNumber': _cPhoneNumber.text,
                         'email': _cEmail.text,
@@ -276,6 +289,7 @@ class _EditPageState extends State<EditPage> {
                         'lastName': _cLastName.text,
                         'gender': gender,
                         'age': _cAge.text,
+                        'birthDate': birthDate != null ? birthDate.toString() : '',
                         'job': _cJob.text,
                         'phoneNumber': _cPhoneNumber.text,
                         'email': _cEmail.text,

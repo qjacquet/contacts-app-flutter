@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:contactsapp/src/home/home_module.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'home/home_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -16,6 +17,13 @@ class AppWidget extends StatelessWidget {
       ),
       home: HomeModule(),
       routes: routes,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('fr', 'FR'),
+      ],
     );
   }
 }

@@ -30,7 +30,11 @@ dependencies:
   share:
   masked_text: ^0.0.6
   file_picker: ^1.10.0
+  date_field: ^0.1.2
+  sqflite_migration: ^0.1.2
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
 
 

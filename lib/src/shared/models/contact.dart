@@ -3,6 +3,7 @@ class Contact {
   String lastName;
   String gender;
   String age;
+  String birthDate;
   String job;
   String phoneNumber;
   String email;

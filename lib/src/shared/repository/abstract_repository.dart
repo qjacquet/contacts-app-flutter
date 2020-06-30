@@ -1,31 +1,42 @@
+import 'dart:async';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_migration/sqflite_migration.dart';
 import '../../../application.dart';
 
 abstract class AbstractRepository {
-  Database _db;
-  String get dbname;
-  int get dbversion;
+  static Database _database;
+  String path;
 
-  Future<Database> init() async {
-    if (this._db == null) {
-      var databasesPath = await getDatabasesPath();
-      String path = databasesPath + dbname;
-
-      // Delete the database - Use in tests
-      // await deleteDatabase(path);
-
-      this._db = await openDatabase(path, version: dbversion,
-          onCreate: (Database db, int version) async {
-        dbCreate.forEach((String sql) {
-          db.execute(sql);
-        });
-      });
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database;
     }
-    return this._db;
+
+    _database = await _open();
+    print(await _database.query('contacts'));
+    return _database;
   }
 
-  Future<Database> getDb() async {
-    return await this.init();
+  Future<Database> _open() async {
+    final databasesPath = await getDatabasesPath();
+    final path = join(databasesPath, dbName);
+
+    return await openDatabase(path,
+        version: migrations.length,
+        onCreate: (Database db, int version) async {
+          migrate(db, 0, version);
+        },
+        onUpgrade: (Database db, int oldVersion, int newVersion) async {
+          print('passed');
+          migrate(db, oldVersion, newVersion);
+        });
+  }
+
+  static migrate(Database db, int oldVersion, int newVersion) async {
+    for (var i = oldVersion; i <= newVersion - 1; i++) {
+      await db.execute(migrations[i]);
+    }
   }
 
   Future<List<Map>> list();
@@ -37,11 +48,4 @@ abstract class AbstractRepository {
   Future<bool> update(Map<String, dynamic> values, dynamic where);
 
   Future<bool> delete(int id);
-
-  void close() async {
-    if (this._db != null) {
-      await this._db.close();
-      this._db = null;
-    }
-  }
 }

@@ -1,7 +1,6 @@
 String dbName = 'flutter_contacts.db';
-int dbVersion = 1;
 
-List<String> dbCreate = [
+List<String> migrations = [
   """CREATE TABLE contacts (
     id INTEGER PRIMARY KEY,
     firstName TEXT,
@@ -16,4 +15,9 @@ List<String> dbCreate = [
     photo TEXT,
     created TEXT
   )""",
+  """
+  alter table contacts add column birthDate TEXT default '';
+  """
+
 ];
+
