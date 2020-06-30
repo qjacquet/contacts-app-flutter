@@ -27,7 +27,6 @@ class _ContactListState extends State<ContactList> {
 
   void _onTapDown(TapDownDetails details) {
     _tapPosition = details.globalPosition;
-    print(_tapPosition);
   }
 
   Column column(context) {

@@ -14,7 +14,6 @@ abstract class AbstractRepository {
     }
 
     _database = await _open();
-    print(await _database.query('contacts'));
     return _database;
   }
 
@@ -28,7 +27,6 @@ abstract class AbstractRepository {
           migrate(db, 0, version);
         },
         onUpgrade: (Database db, int oldVersion, int newVersion) async {
-          print('passed');
           migrate(db, oldVersion, newVersion);
         });
   }

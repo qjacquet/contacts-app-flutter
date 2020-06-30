@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> {
           stream: bloc.buttonSearchOut,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              print(snapshot.error);
               return Text('Error: ${snapshot.error}');
             } else {
               if (!snapshot.hasData) {
@@ -106,7 +105,6 @@ class _HomePageState extends State<HomePage> {
           }
 
           if (snapshot.hasError) {
-            print(snapshot.error);
             return Text('Error: ${snapshot.error}');
           } else {
             bloc.setVisibleButtonSearch(snapshot.data.length > 0 || searching);

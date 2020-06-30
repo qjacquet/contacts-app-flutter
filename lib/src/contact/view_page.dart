@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:contactsapp/src/home/home_bloc.dart';
 import 'package:contactsapp/src/home/home_module.dart';
+import 'package:contactsapp/src/shared/helpers/index.dart';
 import 'package:flutter/material.dart';
 
 import 'edit_page.dart';
@@ -51,7 +52,6 @@ class _ViewPageState extends State<ViewPage> {
             }
 
             if (snapshot.hasError) {
-              print(snapshot.error);
               return Text('Error: ${snapshot.error}');
             } else {
               return AppBar(
@@ -98,7 +98,6 @@ class _ViewPageState extends State<ViewPage> {
           }
 
           if (snapshot.hasError) {
-            print(snapshot.error);
             return Text('Error: ${snapshot.error}');
           } else {
             this.contact = snapshot.data;
@@ -145,15 +144,15 @@ class _ViewPageState extends State<ViewPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              (item['age'] != null && item['age'] != '') ? Container(
+              (item['birthDate'] != '') ? Container(
                 child: Text(
-                  item['age'] + ' ans',
+                  getAgeFromDateTime(DateTime.parse(item['birthDate'])) + ' ans',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ) : Container(),
-              item['job'] != null ? Container(
+              item['job'] != '' ? Container(
                 child: Text(
-                  (item['age'] != null && item['age'] != '') ? ' - ' + item['job'] : item['job'],
+                  (item['birthDate'] != '') ? ' - ' + item['job'] : item['job'],
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ) : Container(),
