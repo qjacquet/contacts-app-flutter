@@ -28,10 +28,14 @@ class _LoginPageState extends State<LoginPage> {
         body: StreamBuilder(
             stream: bloc.settingsOut,
             builder: (context, snapshot) {
-              if(snapshot.hasData && snapshot.data['appAlreadySet'] == 1) {
-                return Login();
+              if(snapshot.hasData) {
+                if(snapshot.data['appAlreadySet'] == 1) {
+                  return Login();
+                } else {
+                  return InitialConfig();
+                }
               } else {
-                return InitialConfig();
+                return Scaffold();
               }
             }
         )

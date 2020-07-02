@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Password',
+              hintText: 'Saisissez votre mot de passe',
               hintStyle: kHintTextStyle,
             ),
           ),

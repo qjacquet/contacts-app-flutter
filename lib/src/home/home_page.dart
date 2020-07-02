@@ -29,9 +29,13 @@ class _HomePageState extends State<HomePage> {
     bloc = HomeModule.to.bloc<HomeBloc>();
     app = AppModule.to.bloc<AppBloc>();
     super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
 
     Timer.run(() {
-      print(app.isAuth());
       if (!app.isAuth()) {
         Navigator.push(
           context,
@@ -39,11 +43,7 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
-  }
 
-
-  @override
-  Widget build(BuildContext context) {
     bloc.getListContact();
     return Scaffold(
       appBar: PreferredSize(
