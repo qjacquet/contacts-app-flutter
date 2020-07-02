@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:contactsapp/src/shared/repository/contact_repository.dart';
+import 'package:contactsapp/src/shared/repository/settings_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../app_module.dart';
@@ -7,10 +8,14 @@ import '../app_module.dart';
 class HomeBloc extends BlocBase {
   // ModelContact modelContact = ModelContact();
   final contactRepository =
-      AppModule.to.getDependency<ContactRepository>(); //pega a injeção do BLoC
+    AppModule.to.getDependency<ContactRepository>();
+
+  final settingsRepository =
+    AppModule.to.getDependency<SettingsRepository>();
 
   List<Map> contacts;
   Map contact;
+  Map settings;
   bool searchButton = false;
   bool showSearch = false;
   bool favorite = false;
@@ -20,6 +25,7 @@ class HomeBloc extends BlocBase {
   BehaviorSubject<Map> _contactController;
   BehaviorSubject<bool> _searchButtonController;
   BehaviorSubject<bool> _searchController;
+  BehaviorSubject<Map> _settingsController;
 
   HomeBloc() {
     _listContactController = BehaviorSubject.seeded(contacts);
@@ -27,6 +33,7 @@ class HomeBloc extends BlocBase {
     _searchButtonController = BehaviorSubject.seeded(searchButton);
     _searchController = BehaviorSubject.seeded(showSearch);
     _favoriteController = BehaviorSubject.seeded(favorite);
+    _settingsController = BehaviorSubject.seeded(settings);
     getListContact();
   }
 
@@ -35,6 +42,16 @@ class HomeBloc extends BlocBase {
   Observable<Map> get contactOut => _contactController.stream;
   Observable<List<Map>> get listContactOut => _listContactController.stream;
   Observable<bool> get favoriteOut => _favoriteController.stream;
+  Observable<Map> get settingsOut => _settingsController.stream;
+
+  getSettings() async {
+    _settingsController.add(await settingsRepository.getItem(1));
+  }
+
+  setSettings(Map settings) {
+    _settingsController.add(settings);
+  }
+
 
   setFavorite(bool favorite) async {
     _favoriteController.add(favorite);
@@ -73,6 +90,7 @@ class HomeBloc extends BlocBase {
     _contactController.close();
     _searchController.close();
     _favoriteController.close();
+    _settingsController.close();
     super.dispose();
   }
 }

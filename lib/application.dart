@@ -17,7 +17,14 @@ List<String> migrations = [
   )""",
   """
   alter table contacts add column birthDate TEXT default '';
+  """,
+  """CREATE TABLE settings (
+    id INTEGER PRIMARY KEY,
+    appAlreadySet INTEGER default 0,
+    appPassword TEXT
+  );""",
   """
-
+  INSERT INTO settings (appAlreadySet, appPassword) VALUES (0, '');
+  """
 ];
 

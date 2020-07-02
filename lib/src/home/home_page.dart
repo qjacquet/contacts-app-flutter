@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:contactsapp/src/app_bloc.dart';
+import 'package:contactsapp/src/app_module.dart';
+import 'package:contactsapp/src/auth/auth_module.dart';
 import 'package:contactsapp/src/contact/add_page.dart';
 import 'package:contactsapp/src/shared/widgets/ContactList.dart';
 import 'package:flutter/material.dart';
-
 import 'home_bloc.dart';
 import 'home_module.dart';
 
@@ -13,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeBloc bloc;
+  AppBloc app;
   Widget appBarTitle = new Text("Contacts");
   Icon actionIcon = new Icon(Icons.search);
   Color color = Colors.indigo;
@@ -21,9 +26,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    bloc = HomeModule.to.getBloc<HomeBloc>();
+    bloc = HomeModule.to.bloc<HomeBloc>();
+    app = AppModule.to.bloc<AppBloc>();
     super.initState();
+
+    Timer.run(() {
+      print(app.isAuth());
+      if (!app.isAuth()) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AuthModule()),
+        );
+      }
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
