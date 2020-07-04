@@ -76,7 +76,6 @@ class _AddPageState extends State<AddPage> {
     );
 
     DropdownButtonFormField dropDownGender = new DropdownButtonFormField<String>(
-      hint: Text('Genre'),
       value: gender,
       items: <String>['Homme', 'Femme', 'Autre'].map((String value) {
         return new DropdownMenuItem<String>(
@@ -90,6 +89,7 @@ class _AddPageState extends State<AddPage> {
         });
       },
       decoration: InputDecoration(
+        labelText: 'Genre',
         icon: Icon(Icons.person),
       ),
     );
@@ -97,7 +97,7 @@ class _AddPageState extends State<AddPage> {
     Column pickBirthDate = Column(
         children: <Widget>[
           new DateField(
-            label: 'Sélectionner une date',
+            label: 'Aucune date séléctionnée',
             decoration: InputDecoration(
               labelText: 'Date de naissance',
               icon: Icon(Icons.cake),

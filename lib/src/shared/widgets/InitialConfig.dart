@@ -90,7 +90,7 @@ class _InitialConfigState extends State<InitialConfig> {
         ),
         color: Colors.white,
         child: Text(
-          'Enregistrer',
+          'ENREGISTRER',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -133,9 +133,11 @@ class _InitialConfigState extends State<InitialConfig> {
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
+                  padding: EdgeInsets.only(
+                    left: 40.0,
+                    right: 40.0,
+                    top: 60.0,
+                    bottom: 40.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -150,9 +152,8 @@ class _InitialConfigState extends State<InitialConfig> {
                         ),
                       ),
                       SizedBox(height: 30.0),
-                      SizedBox(
-                        height: 30.0,
-                      ),
+                      Image(image: AssetImage('lib/assets/login.png')),
+                      SizedBox(height: 30.0),
                       _buildPasswordTF(),
                       _buildBtn(),
                     ],

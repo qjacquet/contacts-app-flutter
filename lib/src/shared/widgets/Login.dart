@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
         ),
         color: Colors.white,
         child: Text(
-          'LOGIN',
+          'CONNEXION',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -131,10 +131,11 @@ class _LoginState extends State<Login> {
               Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
+                  padding: EdgeInsets.only(
+                    left: 40.0,
+                    right: 40.0,
+                    top: 60.0,
+                    bottom: 40.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -149,9 +150,8 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: 30.0),
-                      SizedBox(
-                        height: 30.0,
-                      ),
+                      Image(image: AssetImage('lib/assets/login.png')),
+                      SizedBox(height: 30.0),
                       _buildPasswordTF(),
                       _buildLoginBtn(),
                     ],
